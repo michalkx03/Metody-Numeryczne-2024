@@ -1,0 +1,29 @@
+function main()
+     load('filtr_dielektryczny.mat');
+    [err_norm_J, err_norms_J, time_J] = solve_Jacobi(A, b);
+    time_J;
+    err_norm_J;
+    [err_norm_GS, err_norms_GS, time_GS] = solve_Gauss_Seidel(A, b);
+    time_GS;
+    err_norm_GS;
+    [~, time] = solve_direct(A, b);
+    time;
+
+    figure;
+    plot(1:length(err_norms_G), err_norms_G, 'b');
+    title('Norma błędu rezydualnego w zależności od liczby iteracji dla Gauss-Seidela');
+    xlabel('Liczba iteracji');
+    ylabel('Norma błędu rezydualnego');
+    legend('Gauss-Seidel');
+    hold off;
+    print -dpng zadanie6_gauss.png
+
+    figure;
+    semilogy(1:length(err_norms_J), err_norms_J, 'r');
+    title('Norma błędu rezydualnego w zależności od liczby iteracji dla Jacobiego');
+    xlabel('Liczba iteracji');
+    ylabel('Norma błędu rezydualnego');
+    legend('Jacobi');
+    hold off;
+    print -dpng zadanie6_jacobi.png
+end

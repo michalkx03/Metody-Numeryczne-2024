@@ -1,0 +1,27 @@
+function [A, b, M, bm, x, err_norm, time, index_number, iterations] = solve_Jacobi(N)
+    index_number = 193387;
+    L1 = mod(index_number, 10);
+    [A, b] = generate_matrix(N, L1);
+    
+    D = diag(diag(A));
+    L = tril(A, -1);
+    U = triu(A, 1);
+    M = -D\(L+U);
+    bm = D\b;
+    
+    x = ones(N, 1);
+    err_norms = [err_norms, err_norm];
+    max_iterations = 1000;
+
+    tic;
+    err_norm = norm(A*x-b);
+    for iterations = 1:max_iterations
+        x = M*x + bm;
+        err_norm = norm(A*x - b);
+        err_norms = [err_norms, err_norm];
+        if err_norm <= 1e-5
+            break;
+        end
+    end
+    time = toc;
+end

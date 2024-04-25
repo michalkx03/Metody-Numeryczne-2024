@@ -1,0 +1,72 @@
+import Foundation
+
+enum MediaType {
+    case photo
+    case video
+    case music
+}
+
+class UserProfile {
+    let name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+
+class Post {
+    let userProfile: UserProfile
+    let mediaType: MediaType
+    let postDate: Date
+    let likesCount: Int
+    
+    init(userProfile: UserProfile, mediaType: MediaType, postDate: Date, likesCount: Int) {
+        self.userProfile = userProfile
+        self.mediaType = mediaType
+        self.postDate = postDate
+        self.likesCount = likesCount
+    }
+    
+    func description() -> String {
+        let mediaTypeString: String
+        switch mediaType {
+        case .photo:
+            mediaTypeString = "Photo"
+        case .video:
+            mediaTypeString = "Video"
+        case .music:
+            mediaTypeString = "Music"
+        }
+        
+        let formattedDate = formatDate(postDate)
+        let formattedLikes = formatLikes(likesCount)
+        
+        return "\(userProfile.name) | Media type: \(mediaTypeString) | Date: \(formattedDate) | Likes: \(formattedLikes)"
+    }
+}
+
+func formatDate(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd.MM.yyyy"
+    return dateFormatter.string(from: date)
+}
+
+func formatLikes(_ likesCount: Int) -> String {
+    if likesCount >= 1000 {
+        return "\(likesCount / 1000)k"
+    } else {
+        return "\(likesCount)"
+    }
+}
+
+
+let user = UserProfile(name: "Przeglad sportowy")
+let post = Post(userProfile: user, mediaType: .photo, postDate: Date(), likesCount:423000)
+
+let user1 = UserProfile(name: "Eurosport")
+let post1 = Post(userProfile: user1, mediaType: .video, postDate: Date(), likesCount:30000)
+let feedPosts = [post, post1]
+
+for post in feedPosts {
+    print(post.description())
+}

@@ -1,0 +1,51 @@
+function plot_circle(R, X, Y)
+    % R - promień okręgu
+    % X - współrzędna x środka okręgu
+    % Y - współrzędna y środka okręgu
+    theta = linspace(0,2*pi);
+    x = R*cos(theta) + X;
+    y = R*sin(theta) + Y;
+    plot(x,y)
+end
+function [circles,index_number] = generate_circles(a,r_max,n_max)
+    index_number = 193387;
+    L1 = 7;
+
+    circles = zeros([3,n_max])
+    for i = 1:n_max
+        while true
+            collides = 0;
+            r = r_max*rand(1);
+            x = a*rand(1);
+            y = a*rand(1);
+
+            for j = 1:i-1
+                distance_x = x - circles(1, j);
+                distance_y = y - circles(2, j);
+                distance = sqrt(distance_x^2 + distance_y^2);
+                if distance <= r + circles(3, j)
+                    collides = 1;
+                end
+            end
+            if (x + r <= a) && (x - r >= 0) && (y + r <= a) && (y - r >= 0) && collides == 0
+                break
+            end
+        end
+        circles(1, i) = r;
+        circles(2, i) = x;
+        circles(3, i) = y;
+    end
+end
+
+function plot_circles(a,circles,index_number)
+figure
+hold on
+axis equal
+axis([0 a 0 a])
+L1 = 7;
+for i = 1:size(circles, 2)
+            plot_circle(circles(3, i), circles(1, i), circles(2, i));
+        end
+end
+
+

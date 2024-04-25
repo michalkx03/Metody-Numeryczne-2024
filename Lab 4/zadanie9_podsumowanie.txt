@@ -1,0 +1,8 @@
+Dla x0 = 6 funkcja zwraca odpowiedź równą 6.28. Funkcja szuka przedziału wokół 6 zawierający zmianę znaku.
+Następnie używając interpolacji szuka x dla kórego f(x) jest najbliżej zera tak długo az x juz sie praktycznie nie zmienia.
+Dla x0 = 4.5 zwraca 4.71. Tutaj podobnie na początku zostaje znaleziony przedział zawierający zmianę znaku.
+Jednak potem funkcja stosuje naprzemiennie interpolację oraz bisekcję funkcja tangens w okolicy 4.5 nie ma miejsca zerowego
+jednak funkcja znalazła zmianę znaku o której nas informuje, mówiąc nam błędnie, że to miejsce zerowe sie tam znajduje.
+
+Wnioskując funkcja fzero używa algorytmów bisekcji oraz interpolacji jednak myli się ona podczas gdy funkcja ma właściowści
+takie jak funkcja tangens.
